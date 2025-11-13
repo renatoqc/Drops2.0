@@ -181,19 +181,3 @@ Documento que representa el carrito de compras de un usuario. El ID del document
 
 ---
 
-## Notas Importantes:
-
-1. **Stock en Redis**: El stock real se mantiene en Redis con la clave `product:{productId}:stock`. El campo `stock_limit` en Firestore es solo para referencia inicial.
-
-2. **Inicialización**: Al crear un producto, se debe inicializar el stock en Redis:
-   ```bash
-   redis-cli SET product:{productId}:stock {stock_limit}
-   ```
-
-3. **Sincronización**: El stock en Redis es la fuente de verdad. Firestore solo mantiene `totalSold` para auditoría.
-
-4. **Índices Recomendados**: Crear índices compuestos en Firestore para:
-   - `products`: `isActive` + `createdAt`
-   - `purchases`: `productId` + `timestamp`
-   - `purchases`: `userId` + `timestamp`
-
